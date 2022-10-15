@@ -3,9 +3,22 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 class Square extends React.Component {
+    // create a state to "remember" that the button got clicked.
+    constructor(props) {
+        super(props); //always need to call `super` when defining the constructor of a sub-class. all componenent classes that have a constructor should start with this.
+        this.state ={
+            value: null,
+        };
+    }
   render() {
-    return <button className="square">{this.props.value}</button>;
-  } // this inherits the value property from 'class Board'
+    return (
+        <button className='square'
+         onClick={() => this.setState({value: '❌'})}>
+        {this.state.value}
+        </button>
+    );
+  }
+   // this inherits the value property from 'class Board'
 }
 
 // 'class Square' renders a single <button>
