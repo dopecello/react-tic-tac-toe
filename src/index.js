@@ -4,13 +4,15 @@ import './index.css';
 
 class Square extends React.Component {
   render() {
-    return <button className="square">{/* TODO */}</button>;
-  }
+    return <button className="square">{this.props.value}</button>;
+  } // this inherits the value property from 'class Board'
 }
+
+// 'class Square' renders a single <button>
 
 class Board extends React.Component {
   renderSquare(i) {
-    return <Square />;
+    return <Square value={i} />; //passing a prop called 'value' which equals the position in the index.
   }
 
   render() {
@@ -38,6 +40,9 @@ class Board extends React.Component {
     );
   }
 }
+
+// 'class Board' renders 9 different squares. 
+
 
 class Game extends React.Component {
   render() {
