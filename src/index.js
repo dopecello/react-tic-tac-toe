@@ -1,32 +1,42 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 
 class Square extends React.Component {
-    // deleted the constructor in this instance because 'Square' no longer keeps track of the game's state!
+  // deleted the constructor in this instance because 'Square' no longer keeps track of the game's state!
   render() {
     return (
-        <button className='square'
-         onClick={() => this.props.onClick()}>
+      <button className="square" onClick={() => this.props.onClick()}>
         {this.props.value}
-        </button>
+      </button>
     );
   }
-   // this inherits the value property from 'class Board'
+  // this inherits the value property from 'class Board'
 }
 
 // 'class Square' renders a single <button>
 
 class Board extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            squares: Array(9).fill(null),
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
+  }
+
+  handleClick(i) {
+    const squares = this.state.squares.slice();
+    squares[i] = "❌";
+    this.setState({ squares: squares });
+  }
+
   renderSquare(i) {
-    return (<Square value={this.state.squares[i]}
-        onClick={() => this.handleClick(i)} />); //Splitting return element and added parens to override JavaScript adding a semicolon to the code.
+    return (
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)}
+      />
+    ); //Splitting return element and added parens to override JavaScript adding a semicolon to the code.
   }
 
   render() {
@@ -55,8 +65,7 @@ class Board extends React.Component {
   }
 }
 
-// 'class Board' renders 9 different squares. 
-
+// 'class Board' renders 9 different squares.
 
 class Game extends React.Component {
   render() {
@@ -79,8 +88,7 @@ class Game extends React.Component {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<Game />);
 
-
-// To collect data from multiple children, or to have two child components communicate with each other, 
+// To collect data from multiple children, or to have two child components communicate with each other,
 // you need to declare the shared state in their parent component instead.
 // The parent component can pass the state back down to the children by using props;
 // this keeps the child components in sync with each other and with the parent component.
