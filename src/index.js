@@ -3,18 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 class Square extends React.Component {
-    // create a state to "remember" that the button got clicked.
-    constructor(props) {
-        super(props); //always need to call `super` when defining the constructor of a sub-class. all componenent classes that have a constructor should start with this.
-        this.state ={
-            value: null,
-        };
-    }
+    // deleted the constructor in this instance because 'Square' no longer keeps track of the game's state!
   render() {
     return (
         <button className='square'
-         onClick={() => this.setState({value: '❌'})}>
-        {this.state.value}
+         onClick={() => this.props.onClick()}>
+        {this.props.value}
         </button>
     );
   }
@@ -24,8 +18,15 @@ class Square extends React.Component {
 // 'class Square' renders a single <button>
 
 class Board extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            squares: Array(9).fill(null),
+        };
+    }
   renderSquare(i) {
-    return <Square value={i} />; //passing a prop called 'value' which equals the position in the index.
+    return (<Square value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)} />); //Splitting return element and added parens to override JavaScript adding a semicolon to the code.
   }
 
   render() {
@@ -77,3 +78,9 @@ class Game extends React.Component {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<Game />);
+
+
+// To collect data from multiple children, or to have two child components communicate with each other, 
+// you need to declare the shared state in their parent component instead.
+// The parent component can pass the state back down to the children by using props;
+// this keeps the child components in sync with each other and with the parent component.
